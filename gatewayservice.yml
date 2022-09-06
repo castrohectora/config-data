@@ -1,0 +1,25 @@
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DISCOVERY_HOST}:${DISCOVERY_PORT:8090}/eureka
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: userservice
+          uri: lb://userservice
+          predicates:
+            - Path=/user/**
+        - id: carservice
+          uri: lb://carservice
+          predicates:
+            - Path=/car/**
+        - id: bikeservice
+          uri: lb://bikeservice
+          predicates:
+            - Path=/bike/**
